@@ -7,6 +7,64 @@
         <link rel="stylesheet" href="css/register.css">
 		<!--导入jquery-->
 		<script src="js/jquery-3.3.1.js"></script>
+		<script>
+			<!--表单校验-->
+			/*1.用户名：单词字符长度8-20位
+			2.密码：单词字符长度8-20位
+			3.邮箱:正则
+			4.姓名：非空
+			5.手机号：正则
+			6.日期：非空
+			7.验证码：非空*/
+
+			// 校验用户名
+			function checkUsername() {
+				// 1.获取用户名
+				var username = $("#username").val();
+				// 2.定义正则
+                var reg_username = /^\w{6,20}$/;
+				// 3.判断，给出提示信息
+                var flag = reg_username.test(username);
+                if(flag){
+                    // 用户名合法
+                    $("#username").css("border","");
+                }else {
+                    // 用户名非法
+                    $("#username").css("border","1px solid red");
+                }
+                return flag;
+            };
+			// 校验密码
+			function checkPassword() {
+                // 1.获取密码
+                var password = $("#password").val();
+                // 2.定义正则
+                var reg_password = /^\w{6,20}$/;
+                // 3.判断，给出提示信息
+                var flag = reg_password.test(password);
+                if(flag){
+                    // 密码合法
+                    $("#password").css("border","");
+                }else {
+                    // 密码非法
+                    $("#password").css("border","1px solid red");
+                }
+                return flag;
+            };
+
+            $(function () {
+                // 当表单提交去校验所有的方法
+				$("#registerForm").submit(function () {
+                  return  checkUsername() && checkPassword();
+                    // 如果这个方法没有返回值，或者返回true，则表单提交，入过返回false则表单不提交
+                })
+
+                // 当某一个组件失去焦点时校验对应方法
+				$("#username").blur(checkUsername);
+				$("#password").blur(checkPassword);
+            });
+
+		</script>
     </head>
 	<body>
 	<!--引入头部-->
@@ -21,7 +79,7 @@
     			<div class="rg_form_center">
 					
 					<!--注册表单-->
-    				<form id="registerForm">
+    				<form id="registerForm" action="user">
 						<!--提交处理请求的标识符-->
 						<input type="hidden" name="action" value="register">
     					<table style="margin-top: 25px;">
