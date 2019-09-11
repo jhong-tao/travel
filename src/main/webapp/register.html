@@ -51,17 +51,48 @@
                 }
                 return flag;
             };
+			
+			// 邮箱校验
+            function checkEmail() {
+                // 1.获取邮箱
+                var email = $("#email").val();
+                // 2.定义正则
+                var reg_email = /^\w+@\w+\.\w+$/;
+                // 3.判断
+                var flag = reg_email.test(email);
+                if (flag){
+                    $("#email").css("border","")
+                }else {
+                    $("#email").css("border","1px solid red");
+                }
+                return flag;
+            }
 
+            // 通过load函数对校验进行触发，并使用ajax异步提交数据
             $(function () {
                 // 当表单提交去校验所有的方法
 				$("#registerForm").submit(function () {
-                  return  checkUsername() && checkPassword();
+				    // 1.表单已提交就发送数据到后台服务器
+                    // 2.跳转页面
+                    //2.1 ajax异步提交数据
+                    if(checkUsername() && checkPassword() && checkEmail()){
+                        // 如果校验通过，发送ajax请求，提交表单的数据
+                        // Jq ajax :registUserServlet为请求的servlet，第二个参数为请求是上传的数据，function为回调函数，data是response响应的数据
+                        // 通过 Jq对表单的serialize() 方法将数据获取序列化成key=value && key = value
+                        // 当前this就代表着#registerForm 表单对象，通过$()将js的表单对象转换成为Jq的表单对象
+                        $.post("registUserServlet",$(this).serialize(),function(data){
+
+                        });
+                    }
+                    return false;
+                  // return  checkUsername() && checkPassword() && checkEmail(); // 2.2 这个方式为非异步方式，将使用action的请求路径对数据进行提交
                     // 如果这个方法没有返回值，或者返回true，则表单提交，入过返回false则表单不提交
                 })
 
                 // 当某一个组件失去焦点时校验对应方法
 				$("#username").blur(checkUsername);
 				$("#password").blur(checkPassword);
+				$("#email").blur(checkEmail);
             });
 
 		</script>
