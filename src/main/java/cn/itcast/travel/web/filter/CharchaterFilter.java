@@ -31,7 +31,7 @@ public class CharchaterFilter implements Filter {
             request.setCharacterEncoding("UTF-8");
         }
         // 处理响应乱码问题
-        response.setContentType("text/html;charset=UTF-8");
+         response.setContentType("text/html;charset=UTF-8");
         // 放行
         filterChain.doFilter(request, response);
     }
