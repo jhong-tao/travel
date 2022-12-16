@@ -63,7 +63,7 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
             <!--<version>4.1.2.RELEASE</version>-->
-            <version>4.3.17.RELEASE</version>
+            <version>5.2.20.RELEASE</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
